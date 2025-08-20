@@ -9,10 +9,12 @@ This module contains some statistical functionality.
 
 from __future__ import absolute_import, division, print_function
 
+from typing import Tuple, Union
 import numpy as np
 
 
-def mcnemar_test(test_1, test_2, significance=0.01):
+def mcnemar_test(test_1: Union[np.ndarray, list], test_2: Union[np.ndarray, list], 
+                 significance: float = 0.01) -> Tuple[int, float]:
     """
     Perform McNemar's statistical test.
 

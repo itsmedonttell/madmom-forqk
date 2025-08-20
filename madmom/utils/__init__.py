@@ -13,6 +13,7 @@ from __future__ import absolute_import, division, print_function
 import argparse
 import contextlib
 import io
+from typing import Any, Callable, List, Optional, Union, Tuple
 
 import numpy as np
 
@@ -33,7 +34,7 @@ except NameError:
 
 
 # decorator to suppress warnings
-def suppress_warnings(function):
+def suppress_warnings(function: Callable) -> Callable:
     """
     Decorate the given function to suppress any warnings.
 
@@ -78,7 +79,7 @@ def suppress_warnings(function):
 
 
 # file handling routines
-def filter_files(files, suffix):
+def filter_files(files: Union[str, List[str]], suffix: Optional[Union[str, List[str]]]) -> List[str]:
     """
     Filter the list to contain only files matching the given `suffix`.
 
@@ -115,7 +116,7 @@ def filter_files(files, suffix):
     return file_list
 
 
-def search_path(path, recursion_depth=0):
+def search_path(path: str, recursion_depth: int = 0) -> List[str]:
     """
     Returns a list of files in a directory (recursively).
 
@@ -154,7 +155,7 @@ def search_path(path, recursion_depth=0):
     return sorted(file_list)
 
 
-def search_files(files, suffix=None, recursion_depth=0):
+def search_files(files: Union[str, List[str]], suffix: Optional[str] = None, recursion_depth: int = 0) -> List[str]:
     """
     Returns the files matching the given `suffix`.
 
@@ -201,7 +202,7 @@ def search_files(files, suffix=None, recursion_depth=0):
     return sorted(file_list)
 
 
-def strip_suffix(filename, suffix=None):
+def strip_suffix(filename: str, suffix: Optional[str] = None) -> str:
     """
     Strip off the suffix of the given filename or string.
 
@@ -223,8 +224,8 @@ def strip_suffix(filename, suffix=None):
     return filename
 
 
-def match_file(filename, match_list, suffix=None, match_suffix=None,
-               match_exactly=True):
+def match_file(filename: str, match_list: List[str], suffix: Optional[str] = None,
+               match_suffix: Optional[str] = None, match_exactly: bool = True) -> List[str]:
     """
     Match a filename or string against a list of other filenames or strings.
 
@@ -272,7 +273,7 @@ def match_file(filename, match_list, suffix=None, match_suffix=None,
     return matches
 
 
-def combine_events(events, delta, combine='mean'):
+def combine_events(events: Union[List, np.ndarray], delta: float, combine: str = 'mean') -> np.ndarray:
     """
     Combine all events within a certain range.
 
@@ -330,7 +331,8 @@ def combine_events(events, delta, combine='mean'):
     return events[:idx + 1]
 
 
-def quantize_events(events, fps, length=None, shift=None):
+def quantize_events(events: Union[List, np.ndarray], fps: float, length: Optional[int] = None,
+                    shift: Optional[float] = None) -> np.ndarray:
     """
     Quantize the events with the given resolution.
 
@@ -383,7 +385,8 @@ def quantize_events(events, fps, length=None, shift=None):
     return quantized
 
 
-def quantize_notes(notes, fps, length=None, num_pitches=None, velocity=None):
+def quantize_notes(notes: np.ndarray, fps: float, length: Optional[int] = None,
+                   num_pitches: Optional[int] = None, velocity: Optional[float] = None) -> np.ndarray:
     """
     Quantize the notes with the given resolution.
 
@@ -459,7 +462,7 @@ def quantize_notes(notes, fps, length=None, num_pitches=None, velocity=None):
     return quantized
 
 
-def expand_notes(notes, duration=0.6, velocity=100):
+def expand_notes(notes: np.ndarray, duration: float = 0.6, velocity: int = 100) -> np.ndarray:
     """
     Expand notes to include duration and velocity.
 
@@ -512,7 +515,7 @@ class OverrideDefaultListAction(argparse.Action):
         Separator to be used if multiple values should be parsed from a list.
 
     """
-    def __init__(self, sep=None, *args, **kwargs):
+    def __init__(self, sep: Optional[str] = None, *args: Any, **kwargs: Any) -> None:
         super(OverrideDefaultListAction, self).__init__(*args, **kwargs)
         self.set_to_default = True
         # save the type as the type for the list
@@ -523,7 +526,8 @@ class OverrideDefaultListAction(argparse.Action):
             self.type = str
         self.sep = sep
 
-    def __call__(self, parser, namespace, value, option_string=None):
+    def __call__(self, parser: argparse.ArgumentParser, namespace: argparse.Namespace,
+                 value: str, option_string: Optional[str] = None) -> None:
         # if this Action is called for the first time, remove the defaults
         if self.set_to_default:
             setattr(namespace, self.dest, [])
@@ -539,8 +543,8 @@ class OverrideDefaultListAction(argparse.Action):
 
 
 # taken from: http://www.scipy.org/Cookbook/SegmentAxis
-def segment_axis(signal, frame_size, hop_size, axis=None, end='cut',
-                 end_value=0):
+def segment_axis(signal: np.ndarray, frame_size: int, hop_size: int, axis: Optional[int] = None,
+                 end: str = 'cut', end_value: Union[int, float] = 0) -> np.ndarray:
     """
     Generate a new array that chops the given array along the given axis into
     (overlapping) frames.
