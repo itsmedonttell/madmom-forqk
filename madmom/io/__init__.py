@@ -8,6 +8,7 @@ from __future__ import absolute_import, division, print_function
 
 import contextlib
 import io as _io
+from typing import Union, IO, Generator, Any, Optional
 
 import numpy as np
 
@@ -24,7 +25,7 @@ SEGMENT_DTYPE = [('start', float), ('end', float), ('label', object)]
 
 # overwrite the built-in open() to transparently apply some magic file handling
 @contextlib.contextmanager
-def open_file(filename, mode='r'):
+def open_file(filename: Union[str, IO], mode: str = 'r') -> Generator[IO, None, None]:
     """
     Context manager which yields an open file or handle with the given mode
     and closes it if needed afterwards.
@@ -55,7 +56,7 @@ def open_file(filename, mode='r'):
 
 
 @suppress_warnings
-def load_events(filename):
+def load_events(filename: Union[str, IO]) -> np.ndarray:
     """
     Load a events from a text file, one floating point number per line.
 
@@ -81,7 +82,7 @@ def load_events(filename):
     return events[:, 0]
 
 
-def write_events(events, filename, fmt='%.3f', delimiter='\t', header=None):
+def write_events(events: np.ndarray, filename: Union[str, IO], fmt: str = '%.3f', delimiter: str = '\t', header: Optional[str] = None) -> None:
     """
     Write the events to a file, one event per line.
 

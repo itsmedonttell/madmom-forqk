@@ -10,12 +10,13 @@ Neural Network package.
 
 from __future__ import absolute_import, division, print_function
 
+from typing import List, Union, Tuple
 import numpy as np
 
 from ...processors import Processor, ParallelProcessor, SequentialProcessor
 
 
-def average_predictions(predictions):
+def average_predictions(predictions: List[Union[np.ndarray, Tuple]]) -> Union[np.ndarray, Tuple]:
     """
     Returns the average of all predictions.
 

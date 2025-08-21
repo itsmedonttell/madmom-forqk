@@ -10,6 +10,7 @@ This module contains basic signal processing functionality.
 from __future__ import absolute_import, division, print_function
 
 import warnings
+from typing import Union, Optional
 
 import numpy as np
 
@@ -18,7 +19,7 @@ from ..utils import integer_types
 
 
 # signal functions
-def smooth(signal, kernel):
+def smooth(signal: np.ndarray, kernel: Union[np.ndarray, int, None]) -> np.ndarray:
     """
     Smooth the signal along its first axis.
 

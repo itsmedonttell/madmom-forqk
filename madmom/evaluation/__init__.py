@@ -10,11 +10,12 @@ Evaluation package.
 
 from __future__ import absolute_import, division, print_function
 
+from typing import Union, List
 import numpy as np
 
 
 # evaluation helper functions
-def find_closest_matches(detections, annotations):
+def find_closest_matches(detections: Union[List, np.ndarray], annotations: Union[List, np.ndarray]) -> np.ndarray:
     """
     Find the closest annotation for each detection.
 
@@ -59,7 +60,7 @@ def find_closest_matches(detections, annotations):
     return indices
 
 
-def calc_errors(detections, annotations, matches=None):
+def calc_errors(detections: Union[List, np.ndarray], annotations: Union[List, np.ndarray], matches: Union[List, np.ndarray, None] = None) -> np.ndarray:
     """
     Errors of the detections to the closest annotations.
 
