@@ -10,6 +10,7 @@ This module contains beat tracking related functionality.
 from __future__ import absolute_import, division, print_function
 
 import sys
+from typing import List, Optional, Any
 
 import numpy as np
 
@@ -67,8 +68,8 @@ class RNNBeatProcessor(SequentialProcessor):
 
     """
 
-    def __init__(self, post_processor=average_predictions, online=False,
-                 nn_files=None, **kwargs):
+    def __init__(self, post_processor: Any = average_predictions, online: bool = False,
+                 nn_files: Optional[List[str]] = None, **kwargs: Any) -> None:
         # pylint: disable=unused-argument
         from ..audio.signal import SignalProcessor, FramedSignalProcessor
         from ..audio.stft import ShortTimeFourierTransformProcessor
