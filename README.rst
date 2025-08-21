@@ -129,13 +129,16 @@ This is equivalent to these steps::
     cd madmom
     git submodule update --init --remote
 
-Then you can simply install the package in development mode::
+Then, install the package in "editable" mode, which is the modern equivalent of
+`python setup.py develop`::
 
-    python setup.py develop --user
+    pip install -e .
 
-To run the included tests::
+To run the included tests, simply call `pytest` from the command line once you
+have installed the package. You can configure `pytest` options in the
+`pyproject.toml` file::
 
-    python setup.py pytest
+    pytest
 
 Upgrade of existing installations
 ---------------------------------
@@ -269,7 +272,7 @@ If you use madmom in your work, please consider citing it:
 
 .. code-block:: latex
 
-   @inproceedings{madmom,
+    @inproceedings{madmom,
       Title = {{madmom: a new Python Audio and Music Signal Processing Library}},
       Author = {B{\"o}ck, Sebastian and Korzeniowski, Filip and Schl{\"u}ter, Jan and Krebs, Florian and Widmer, Gerhard},
       Booktitle = {Proceedings of the 24th ACM International Conference on
@@ -279,7 +282,7 @@ If you use madmom in your work, please consider citing it:
       Pages = {1174--1178},
       Address = {Amsterdam, The Netherlands},
       Doi = {10.1145/2964284.2973795}
-   }
+    }
 
 References
 ==========
