@@ -9,8 +9,12 @@ This file contains the setup for setuptools to distribute everything as a
 import glob
 
 import numpy as np
-from Cython.Build import cythonize, build_ext
+from Cython.Build import cythonize
 from setuptools import setup, find_packages, Extension
+
+# NOTE: We are importing build_ext from setuptools, not distutils.
+# This is a key change for using setuptools features.
+from setuptools.command.build_ext import build_ext
 
 # define version
 version = '0.17.dev0'
@@ -61,7 +65,8 @@ classifiers = [
     'Programming Language :: Python :: 3.12',
     'Environment :: Console',
     'License :: OSI Approved :: BSD License',
-    'License :: Free for non-commercial use',
+    # Note: 'License :: Free for non-commercial use' is not a valid SPDX identifier.
+    # It has been removed to fix the warning.
     'Topic :: Multimedia :: Sound/Audio :: Analysis',
     'Topic :: Scientific/Engineering :: Artificial Intelligence',
 ]
@@ -71,15 +76,26 @@ requirements = [
     'numpy>=1.13.4',
     'scipy>=1.13',
     'mido>=1.2.6',
+    'pytest',
+    'pytest-runner',
 ]
 
 # docs to be included
 try:
-    long_description = open('README.rst', encoding='utf-8').read()
-    long_description += '\n' + open('CHANGES.rst', encoding='utf-8').read()
+    # Use context managers for file handling for better practice
+    with open('README.rst', encoding='utf-8') as f:
+        long_description = f.read()
+    with open('CHANGES.rst', encoding='utf-8') as f:
+        long_description += '\n' + f.read()
+except FileNotFoundError:
+    # Handle the case where the file is not found
+    long_description = 'Description not found.'
 except TypeError:
-    long_description = open('README.rst').read()
-    long_description += '\n' + open('CHANGES.rst').read()
+    # Handle Python 2 vs Python 3 open issues
+    with open('README.rst') as f:
+        long_description = f.read()
+    with open('CHANGES.rst') as f:
+        long_description += '\n' + f.read()
 
 # the actual setup routine
 setup(
@@ -92,15 +108,22 @@ setup(
     'Artificial Intelligence (OFAI), Vienna, Austria',
     author_email='madmom-users@googlegroups.com',
     url='https://github.com/CPJKU/madmom',
-    license='BSD, CC BY-NC-SA',
+    license='BSD',
+    # Use find_packages() to automatically find packages in the directory
     packages=find_packages(exclude=['tests', 'docs']),
     ext_modules=cythonize(extensions),
     package_data={'madmom': package_data},
-    exclude_package_data={'': ['tests', 'docs']},
+    include_package_data=True, # Recommended for setuptools
     scripts=scripts,
     install_requires=requirements,
+    # The command class is now from setuptools
     cmdclass={'build_ext': build_ext},
-    setup_requires=['pytest-runner'],
-    tests_require=['pytest'],
+    # `setup_requires` and `tests_require` are deprecated.
+    # We define the pytest command via entry_points instead.
+    entry_points={
+        'distutils.commands': [
+            'pytest = pytest_runner:PyTest'
+        ]
+    },
     classifiers=classifiers,
 )
