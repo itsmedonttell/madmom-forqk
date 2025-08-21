@@ -9,7 +9,9 @@ from __future__ import absolute_import, division, print_function
 
 import math
 import unittest
+from typing import Any
 
+import numpy as np
 from madmom.evaluation.tempo import *
 from . import ANNOTATIONS_PATH, DETECTIONS_PATH
 

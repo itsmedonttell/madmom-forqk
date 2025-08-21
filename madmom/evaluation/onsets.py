@@ -16,6 +16,7 @@ References
 
 from __future__ import absolute_import, division, print_function
 
+from typing import Union, List, Tuple
 import numpy as np
 
 from . import Evaluation, MeanEvaluation, SumEvaluation, evaluation_io
@@ -28,7 +29,7 @@ COMBINE = 0.03
 
 
 # onset evaluation function
-def onset_evaluation(detections, annotations, window=WINDOW):
+def onset_evaluation(detections: Union[List, np.ndarray], annotations: Union[List, np.ndarray], window: float = WINDOW) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
     Determine the true/false positive/negative detections.
 

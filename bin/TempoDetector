@@ -9,6 +9,7 @@ from __future__ import absolute_import, division, print_function
 
 import argparse
 from functools import partial
+from typing import Union, List, IO
 
 import numpy as np
 
@@ -19,7 +20,7 @@ from madmom.io import write_events, write_tempo
 from madmom.processors import IOProcessor, io_arguments
 
 
-def write_mirex(tempi, filename):
+def write_mirex(tempi: np.ndarray, filename: Union[str, IO]) -> None:
     """
     Write the most dominant tempi and the relative strength to a file (in
     MIREX format).

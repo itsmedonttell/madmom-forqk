@@ -8,6 +8,7 @@ BeatTracker beat tracking algorithm.
 from __future__ import absolute_import, division, print_function
 
 import argparse
+from typing import Optional
 
 from madmom.audio import SignalProcessor
 from madmom.features import (ActivationsProcessor, BeatTrackingProcessor,
@@ -16,7 +17,7 @@ from madmom.io import write_beats
 from madmom.processors import IOProcessor, io_arguments
 
 
-def main():
+def main() -> None:
     """BeatTracker"""
 
     # define parser

@@ -9,7 +9,9 @@ from __future__ import absolute_import, division, print_function
 
 import unittest
 from os.path import join as pj
+from typing import Any
 
+import numpy as np
 from madmom.audio.filters import LogarithmicFilterbank
 from madmom.audio.signal import SignalProcessor, FramedSignalProcessor
 from madmom.audio.spectrogram import (Spectrogram, SpectrogramProcessor,
@@ -34,7 +36,7 @@ sample_superflux_act = Activations(pj(ACTIVATIONS_PATH,
 
 class TestHighFrequencyContentFunction(unittest.TestCase):
 
-    def test_values(self):
+    def test_values(self) -> None:
         odf = high_frequency_content(sample_log_filt_spec)
         self.assertTrue(np.allclose(odf[:6], [8.97001563, 9.36399107,
                                               8.64144536, 8.34977449,

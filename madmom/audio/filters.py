@@ -9,6 +9,7 @@ This module contains filter and filterbank related functionality.
 
 from __future__ import absolute_import, division, print_function
 
+from typing import Union, Optional, Any, List
 import numpy as np
 
 from ..processors import Processor
@@ -18,7 +19,7 @@ A4 = 440.
 
 
 # Mel frequency scale
-def hz2mel(f):
+def hz2mel(f: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
     """
     Convert Hz frequencies to Mel.
 

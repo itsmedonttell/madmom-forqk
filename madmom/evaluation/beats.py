@@ -30,6 +30,7 @@ from __future__ import absolute_import, division, print_function
 
 import warnings
 from functools import wraps
+from typing import Union, List, Tuple, Optional
 
 import numpy as np
 

@@ -8,6 +8,7 @@ OnsetDetector onset detection algorithm.
 from __future__ import absolute_import, division, print_function
 
 import argparse
+from typing import Optional
 
 from madmom.audio import SignalProcessor
 from madmom.features import (ActivationsProcessor, OnsetPeakPickingProcessor,
@@ -16,7 +17,7 @@ from madmom.io import write_onsets
 from madmom.processors import IOProcessor, io_arguments
 
 
-def main():
+def main() -> None:
     """OnsetDetector"""
 
     # define parser

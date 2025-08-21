@@ -10,6 +10,7 @@ This module contains spectrogram related functionality.
 from __future__ import absolute_import, division, print_function
 
 import inspect
+from typing import Union, Optional, Any
 
 import numpy as np
 from scipy.ndimage import maximum_filter
@@ -19,7 +20,7 @@ from .filters import (Filterbank, LogarithmicFilterbank, NUM_BANDS, FMIN, FMAX,
 from ..processors import Processor, SequentialProcessor, BufferProcessor
 
 
-def spec(stft):
+def spec(stft: np.ndarray) -> np.ndarray:
     """
     Computes the magnitudes of the complex Short Time Fourier Transform of a
     signal.

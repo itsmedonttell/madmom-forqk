@@ -13,6 +13,7 @@ Notes are stored as numpy arrays with the following column definition:
 
 from __future__ import absolute_import, division, print_function
 
+from typing import Union, Optional, Any, List
 import numpy as np
 
 from .onsets import OnsetPeakPickingProcessor, peak_picking

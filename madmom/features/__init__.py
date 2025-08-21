@@ -20,6 +20,7 @@ objects can be chained/combined to achieve the wanted functionality.
 
 from __future__ import absolute_import, division, print_function
 
+from typing import Union, Optional, Any
 import numpy as np
 
 from ..processors import Processor
@@ -59,11 +60,11 @@ class Activations(np.ndarray):
     # pylint: disable=super-init-not-called
     # pylint: disable=attribute-defined-outside-init
 
-    def __init__(self, data, fps=None, sep=None, dtype=np.float32):
+    def __init__(self, data: Any, fps: Optional[float] = None, sep: Optional[str] = None, dtype: np.dtype = np.float32) -> None:
         # this method is for documentation purposes only
         pass
 
-    def __new__(cls, data, fps=None, sep=None, dtype=np.float32):
+    def __new__(cls, data: Any, fps: Optional[float] = None, sep: Optional[str] = None, dtype: np.dtype = np.float32) -> 'Activations':
         import io
 
         # check the type of the given data

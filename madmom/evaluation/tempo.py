@@ -10,6 +10,7 @@ This module contains tempo evaluation functionality.
 from __future__ import absolute_import, division, print_function
 
 import warnings
+from typing import Union, List, Tuple, Optional
 
 import numpy as np
 
@@ -23,7 +24,7 @@ TRIPLE = True
 
 
 # function to sort tempi
-def sort_tempo(tempo):
+def sort_tempo(tempo: np.ndarray) -> np.ndarray:
     """
     Sort tempi according to their strengths.
 

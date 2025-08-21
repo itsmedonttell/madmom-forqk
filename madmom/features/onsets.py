@@ -9,6 +9,7 @@ This module contains onset detection related functionality.
 
 from __future__ import absolute_import, division, print_function
 
+from typing import Union, Optional, Any, List
 import numpy as np
 from scipy.ndimage import maximum_filter, minimum_filter, uniform_filter
 
@@ -21,7 +22,7 @@ EPSILON = np.spacing(1)
 
 
 # onset detection helper functions
-def wrap_to_pi(phase):
+def wrap_to_pi(phase: np.ndarray) -> np.ndarray:
     """
     Wrap the phase information to the range -π...π.
 
@@ -39,7 +40,7 @@ def wrap_to_pi(phase):
     return np.mod(phase + np.pi, 2.0 * np.pi) - np.pi
 
 
-def correlation_diff(spec, diff_frames=1, pos=False, diff_bins=1):
+def correlation_diff(spec: np.ndarray, diff_frames: int = 1, pos: bool = False, diff_bins: int = 1) -> np.ndarray:
     """
     Calculates the difference of the magnitude spectrogram relative to the
     N-th previous frame shifted in frequency to achieve the highest
@@ -99,7 +100,7 @@ def correlation_diff(spec, diff_frames=1, pos=False, diff_bins=1):
 # Note: all functions here expect a Spectrogram object as their sole argument
 #       thus it is not enforced that the algorithm does exactly what it is
 #       supposed to do, but new configurations can be built easily
-def high_frequency_content(spectrogram):
+def high_frequency_content(spectrogram: Any) -> np.ndarray:
     """
     High Frequency Content.
 
@@ -127,7 +128,7 @@ def high_frequency_content(spectrogram):
     return np.asarray(np.mean(hfc, axis=1))
 
 
-def spectral_diff(spectrogram, diff_frames=None):
+def spectral_diff(spectrogram: Any, diff_frames: Optional[int] = None) -> np.ndarray:
     """
     Spectral Diff.
 
