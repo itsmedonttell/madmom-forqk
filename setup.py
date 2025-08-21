@@ -7,11 +7,10 @@ This file contains the setup for setuptools to distribute everything as a
 """
 
 import glob
-from distutils.extension import Extension
 
 import numpy as np
 from Cython.Build import cythonize, build_ext
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Extension
 
 # define version
 version = '0.17.dev0'
