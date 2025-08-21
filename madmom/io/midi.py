@@ -8,6 +8,7 @@ This module contains MIDI functionality.
 from __future__ import absolute_import, division, print_function
 
 import warnings
+from typing import Union, Optional, Any, List
 
 import mido
 import numpy as np
@@ -19,8 +20,8 @@ DEFAULT_TIME_SIGNATURE = (4, 4)
 
 # TODO: remove these unit conversion functions after upstream PR is merged
 #       https://github.com/olemb/mido/pull/114
-def tick2second(tick, ticks_per_beat=DEFAULT_TICKS_PER_BEAT,
-                tempo=DEFAULT_TEMPO):
+def tick2second(tick: Union[int, float], ticks_per_beat: int = DEFAULT_TICKS_PER_BEAT,
+                tempo: int = DEFAULT_TEMPO) -> float:
     """
     Convert absolute time in ticks to seconds.
 

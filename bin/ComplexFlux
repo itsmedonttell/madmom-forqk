@@ -8,6 +8,7 @@ ComplexFlux onset detection algorithm.
 from __future__ import absolute_import, division, print_function
 
 import argparse
+from typing import Optional
 
 from madmom.audio import (FramedSignalProcessor,
                           LogarithmicSpectrogramProcessor, SignalProcessor,
@@ -19,7 +20,7 @@ from madmom.io import write_onsets
 from madmom.processors import IOProcessor, io_arguments
 
 
-def main():
+def main() -> None:
     """ComplexFlux"""
 
     # define parser

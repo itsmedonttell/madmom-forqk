@@ -6,6 +6,7 @@ This module contains chord recognition related functionality.
 from __future__ import absolute_import, division, print_function
 
 from functools import partial
+from typing import Union, Optional, Any, List
 
 import numpy as np
 
@@ -13,7 +14,7 @@ from ..io import SEGMENT_DTYPE
 from ..processors import SequentialProcessor
 
 
-def majmin_targets_to_chord_labels(targets, fps):
+def majmin_targets_to_chord_labels(targets: np.ndarray, fps: float) -> np.ndarray:
     """
     Converts a series of major/minor chord targets to human readable chord
     labels. Targets are assumed to be spaced equidistant in time as defined
