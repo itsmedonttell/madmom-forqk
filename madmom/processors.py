@@ -21,6 +21,7 @@ import multiprocessing as mp
 import os
 import sys
 from collections.abc import MutableSequence
+from typing import Any, Union, Optional, List, Dict, IO
 
 import numpy as np
 
@@ -34,7 +35,7 @@ class Processor(object):
     """
 
     @classmethod
-    def load(cls, infile):
+    def load(cls, infile: Union[str, IO]) -> 'Processor':
         """
         Instantiate a new Processor from a file.
 
@@ -66,7 +67,7 @@ class Processor(object):
                 obj = pickle.load(f)
         return obj
 
-    def dump(self, outfile):
+    def dump(self, outfile: Union[str, IO]) -> None:
         """
         Save the Processor to a file.
 
@@ -87,7 +88,7 @@ class Processor(object):
         with open_file(outfile, 'wb') as f:
             pickle.dump(self, f, protocol=2)
 
-    def process(self, data, **kwargs):
+    def process(self, data: Any, **kwargs: Any) -> Any:
         """
         Process the data.
 
@@ -109,7 +110,7 @@ class Processor(object):
         """
         raise NotImplementedError('Must be implemented by subclass.')
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
         # this magic method makes a Processor callable
         return self.process(*args, **kwargs)
 

@@ -16,6 +16,7 @@ Please see the README for further details of this package.
 from __future__ import absolute_import, division, print_function
 
 import doctest
+from typing import Any
 
 from importlib.metadata import distribution
 
@@ -52,7 +53,7 @@ class _OutputChecker(_DoctestOutputChecker):
 
     """
 
-    def check_output(self, want, got, optionflags):
+    def check_output(self, want: str, got: str, optionflags: int) -> bool:
         """
         Return 'True' if the actual output from an example matches the
         expected.
