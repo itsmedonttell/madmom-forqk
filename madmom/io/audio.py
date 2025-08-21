@@ -14,6 +14,7 @@ import os
 import subprocess
 import sys
 import tempfile
+from typing import Union, Optional, Any
 
 import numpy as np
 
@@ -39,7 +40,7 @@ class LoadAudioFileError(Exception):
 
 
 # functions for loading audio files with ffmpeg
-def _ffmpeg_fmt(dtype):
+def _ffmpeg_fmt(dtype: np.dtype) -> str:
     """
     Convert numpy dtypes to format strings understood by ffmpeg.
 

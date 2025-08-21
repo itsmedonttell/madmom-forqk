@@ -12,6 +12,7 @@ from __future__ import absolute_import, division, print_function
 import sys
 import warnings
 from operator import itemgetter
+from typing import Union, Optional, List, Tuple, Any
 
 import numpy as np
 
@@ -29,7 +30,7 @@ NO_TEMPO = np.nan
 
 
 # helper functions
-def smooth_histogram(histogram, smooth):
+def smooth_histogram(histogram: Tuple[np.ndarray, np.ndarray], smooth: int) -> Tuple[np.ndarray, np.ndarray]:
     """
     Smooth the given histogram.
 
