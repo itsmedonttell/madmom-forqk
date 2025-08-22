@@ -151,7 +151,7 @@ class TestLocalGroupDelayFunction(unittest.TestCase):
 class ShortTimeFourierTransformClass(unittest.TestCase):
 
     def test_types(self):
-        result = ShortTimeFourierTransform(sample_file)
+        result = ShortTimeFourierTransform(sample_file, circular_shift = True)
         self.assertIsInstance(result, ShortTimeFourierTransform)
         self.assertIsInstance(result, np.ndarray)
         # attributes
@@ -166,7 +166,7 @@ class ShortTimeFourierTransformClass(unittest.TestCase):
         self.assertIsInstance(result.num_frames, int)
 
     def test_values(self):
-        result = ShortTimeFourierTransform(sample_file)
+        result = ShortTimeFourierTransform(sample_file, circular_shift = False)
         self.assertTrue(result.shape == (281, 1024))
         self.assertTrue(result.fft_size == 2048)
         self.assertTrue(result.circular_shift is False)
@@ -180,10 +180,10 @@ class ShortTimeFourierTransformClass(unittest.TestCase):
         self.assertTrue(result.num_frames == 281)
         self.assertTrue(result.num_bins == 1024)
         # from STFT
-        self.assertTrue(np.allclose(ShortTimeFourierTransform(result), result))
+        self.assertTrue(np.allclose(ShortTimeFourierTransform(result, circular_shift = False), result))
 
     def test_methods(self):
-        result = ShortTimeFourierTransform(sample_file)
+        result = ShortTimeFourierTransform(sample_file, circular_shift = True)
         self.assertIsInstance(result.spec(), Spectrogram)
         self.assertIsInstance(result.phase(), Phase)
 
@@ -195,19 +195,19 @@ class ShortTimeFourierTransformClass(unittest.TestCase):
         scaling = float(np.iinfo(signal.dtype).max)
         scaled_signal = signal / scaling
         # calculate the STFTs of both signals
-        result = ShortTimeFourierTransform(signal)
-        scaled_result = ShortTimeFourierTransform(scaled_signal)
+        result = ShortTimeFourierTransform(signal, circular_shift = True)
+        scaled_result = ShortTimeFourierTransform(scaled_signal, circular_shift = True)
         # both STFTs must be the same
         self.assertTrue(np.allclose(result, scaled_result))
         # if now window is given, a uniformly distributed one should be used
-        result = ShortTimeFourierTransform(signal, window=None)
+        result = ShortTimeFourierTransform(signal, window=None, circular_shift = True)
         self.assertTrue(np.allclose(result.fft_window,
                                     np.ones(2048, dtype=float) / scaling))
-        scaled_result = ShortTimeFourierTransform(scaled_signal, window=None)
+        scaled_result = ShortTimeFourierTransform(scaled_signal, window=None, circular_shift = True)
         self.assertTrue(scaled_result.fft_window is None)
 
     def test_nyquist(self):
-        result = ShortTimeFourierTransform(sample_file, include_nyquist=True)
+        result = ShortTimeFourierTransform(sample_file, include_nyquist=True, circular_shift = False)
         self.assertTrue(result.shape == (281, 1025))
         self.assertTrue(result.fft_size == 2048)
         self.assertTrue(result.circular_shift is False)
