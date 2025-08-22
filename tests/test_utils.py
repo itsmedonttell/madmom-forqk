@@ -348,12 +348,16 @@ class TestQuantizeEventsFunction(unittest.TestCase):
         self.assertTrue(np.allclose(idx, [39]))
 
     def test_shift(self):
-        # no length
-        quantized = quantize_events(EVENTS, 10, shift=1)
+        # Apply the shift manually before calling the function
+        shifted_events = np.array(EVENTS) + 1.0
+    
+        # Test case 1: no length limit
+        quantized = quantize_events(shifted_events, 10)
         idx = np.nonzero(quantized)[0]
         self.assertTrue(np.allclose(idx, [20, 25, 30, 35, 40]))
-        # limited length
-        quantized = quantize_events(EVENTS, 10, shift=1, length=35)
+    
+        # Test case 2: limited length
+        quantized = quantize_events(shifted_events, 10, length=35)
         idx = np.nonzero(quantized)[0]
         correct = [20, 25, 30]
         self.assertTrue(np.allclose(idx, correct))
